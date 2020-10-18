@@ -1,0 +1,58 @@
+version: '3.7'
+
+services:
+    php:
+        container_name: php
+        build:
+            context: .
+            dockerfile: ./docker/app/php/Dockerfile
+        volumes:
+            - .:/var/www/html
+        ports:
+            - '80:80'
+        depends_on:
+            - db
+        links:
+            - db
+        networks:
+            - backend
+
+    # web:
+    #     container_name: nginx
+    #     build:
+    #         context: .
+    #         dockerfile: ./docker/dev/app/nginx/Dockerfile
+    #     volumes:
+    #         - .:/var/www/
+    #         # -  ./docker/dev/app/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    #     ports:
+    #         - '80:80'
+    #     depends_on:
+    #         - php
+    #     networks:
+    #         - backend
+
+    db:
+        image: mysql:5.7
+        container_name: db
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: dev-php
+            MYSQL_USER: default
+            MYSQL_PASSWORD: root
+            TZ: 'Asia/Tokyo'
+        volumes:
+            - 'default-db:/var/lib/mysql/'
+            - './docker/app/mysql/conf_d/my.cnf:/etc/mysql/my.cnf'
+
+        ports:
+            - 3306:3306
+        networks:
+            - backend
+
+volumes:
+    default-db:
+
+networks:
+    backend:
+        driver: bridge
