@@ -5,7 +5,7 @@ services:
         container_name: php
         build:
             context: .
-            dockerfile: ./docker/app/php/Dockerfile
+            dockerfile: ./docker/app/Dockerfile
         volumes:
             - .:/var/www/html
         ports:
@@ -38,12 +38,12 @@ services:
         environment:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: dev-php
-            MYSQL_USER: default
+            MYSQL_USER: root
             MYSQL_PASSWORD: root
             TZ: 'Asia/Tokyo'
         volumes:
             - 'default-db:/var/lib/mysql/'
-            - './docker/app/mysql/conf_d/my.cnf:/etc/mysql/my.cnf'
+            - './docker/mysql/conf_d/my.cnf:/etc/mysql/my.cnf'
 
         ports:
             - 3306:3306
