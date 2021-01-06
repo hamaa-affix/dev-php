@@ -1,0 +1,15 @@
+{
+    "name": "hamadayuuta/php_framework",
+    "authors": [
+        {
+            "name": "hamaa-affix",
+            "email": ""
+        }
+    ],
+    "autoload": {
+        "psr-4":{
+            "app\\": "./"
+        }
+    },
+    "require": {}
+}
